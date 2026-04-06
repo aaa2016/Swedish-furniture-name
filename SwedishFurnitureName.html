@@ -23,6 +23,9 @@
 			input = input.toLowerCase();
 			// Remove any punctuation (but not including spaces and hyphens)
 			input = input.replace(/[0-9`~!@#$%^&*_|+\=?;:"<>.,]/g,"");
+			input = input.replace(/qu/g,"kv"); // Q is rare in Swedish words
+			input = input.replace(/q/g,"k"); // Q is rare in Swedish words
+			input = input.replace(/w/g,"v"); // W is rare in Swedish words
 			
 			// Main transliteration function (see below)
 			var output = generateName(input);
@@ -158,9 +161,9 @@
 		  margin: auto;
 		  padding: 10px;
 		  font-size: larger;
-		  color: #FFC200;
+		  color: #FFC200; /* Swedish flag yellow */
 		  font-weight: bold;
-		  background-color: #005583;
+		  background-color: #005583; /* Swedish flag blue */
 		  position: relative;
 		}
 		
