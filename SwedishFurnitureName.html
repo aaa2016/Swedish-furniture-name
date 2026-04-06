@@ -13,6 +13,7 @@
 		
 			// Reset error messages
 			document.getElementById("messageField").innerHTML = "";
+			document.getElementById("outputField").innerHTML = "";
 		
 			// Get the name provided by the user
 			var input = document.getElementById("inputField").value;
@@ -26,20 +27,32 @@
 			input = input.replace(/qu/g,"kv"); // Q is rare in Swedish words
 			input = input.replace(/q/g,"k"); // Q is rare in Swedish words
 			input = input.replace(/w/g,"v"); // W is rare in Swedish words
+				
+			// Check that input is not blank
+			if (input != "") {
 			
-			// Main transliteration function (see below)
-			var output = generateName(input);
-			
-			//console.log("Form output is: " + output);
-			
-			// Output onto page
-			document.getElementById("outputField").innerHTML = 
-				"Your Swedish furniture name is: ";
-			
-			const swedishName = document.createElement("div");
-				swedishName.innerHTML = output;
-				swedishName.classList.add("name");
-				document.getElementById("outputField").appendChild(swedishName);
+				// Main transliteration function (see below)
+				var output = generateName(input);
+				
+				//console.log("Form output is: " + output);
+				
+				// Output onto page
+				document.getElementById("outputField").innerHTML = 
+					"Your Swedish furniture name is: ";
+				
+				const swedishName = document.createElement("div");
+					swedishName.innerHTML = output;
+					swedishName.classList.add("name");
+					document.getElementById("outputField").appendChild(swedishName);
+				
+			} else {
+				//console.log("Input is blank");
+				
+				const errorMessage = document.createElement("div");
+				errorMessage.innerHTML = "Oh no! You forgot to put a name in";
+				errorMessage.classList.add("error");
+				document.getElementById("messageField").appendChild(errorMessage);
+			}
 		
 		}
 		
