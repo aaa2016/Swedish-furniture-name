@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <title id="pageTitle">Swedish Furniture Name Generator</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Artur A.">
+
+		<script>
+		
+		function generate() {
+		
+			// Reset error messages
+			document.getElementById("messageField").innerHTML = "";
+		
+			// Get the name provided by the user
+			var input = document.getElementById("inputField").value;
+			
+			//console.log("Form input is: " + input);
+			
+			// Change to lower case
+			input = input.toLowerCase();
+			// Remove any punctuation (but not including spaces and hyphens)
+			input = input.replace(/[0-9`~!@#$%^&*_|+\=?;:"<>.,]/g,"");
+			
+			// Main transliteration function (see below)
+			var output = generateName(input);
+			
+			//console.log("Form output is: " + output);
+			
+			// Output onto page
+			document.getElementById("outputField").innerHTML = 
+				"Your Swedish furniture name is: ";
+			
+			const swedishName = document.createElement("div");
+				swedishName.innerHTML = output;
+				swedishName.classList.add("name");
+				document.getElementById("outputField").appendChild(swedishName);
+		
+		}
+		
+		function generateName(input) {
+		
+			//console.log("Function input is: " + input);
+			//console.log("Input length is: " + input.length)
+		
+			// Reverse the characters of the string
+			let reverseString = "";
+			for (let i = input.length - 1; i >= 0; i--) {
+				//console.log("Letter "+ i + " is: "+ input[i]);
+				// The first letter of the output should be capitalised
+				if (i==(input.length-1)) {
+			    	reverseString += input[i].toUpperCase();
+			    } else {
+			    	reverseString += input[i];
+			    }
+			}
+			
+			//console.log("Reversed string is: " + reverseString);
+			
+			// Boolean marker for once vowel has been changed
+			let vowelChanged = false;
+			
+			// Modify the string to alter the first vowel
+			let modifiedString = "";
+			for (let i = 0; i < reverseString.length; i++) {
+				//console.log("Letter "+ i + " is: "+ reverseString[i]);
+				
+				if (vowelChanged==false) {
+					//console.log("Vowel has not yet been changed");
+					
+					switch (reverseString[i]) {
+						case "a":
+							modifiedString += "ä"
+							vowelChanged = true; // Change no more vowels
+							//console.log("Modified string is now: " + modifiedString);
+							break;
+						case "o":
+							modifiedString += "ö"
+							vowelChanged = true; // Change no more vowels
+							//console.log("Modified string is now: " + modifiedString);
+							break;
+						case "u":
+							modifiedString += "y"
+							vowelChanged = true; // Change no more vowels
+							//console.log("Modified string is now: " + modifiedString);
+							break;
+						case "A":
+							modifiedString += "Ä"
+							vowelChanged = true; // Change no more vowels
+							//console.log("Modified string is now: " + modifiedString);
+							break;
+						case "O":
+							modifiedString += "Ö"
+							vowelChanged = true; // Change no more vowels
+							//console.log("Modified string is now: " + modifiedString);
+							break;
+						case "U":
+							modifiedString += "Y"
+							vowelChanged = true; // Change no more vowels
+							//console.log("Modified string is now: " + modifiedString);
+							break;
+						default:
+							modifiedString += reverseString[i];
+							//console.log("Modified string is now: " + modifiedString);
+					}
+				} else {
+					//console.log("Vowel has been already been changed once");
+					modifiedString += reverseString[i];
+					//console.log("Modified string is now: " + modifiedString);
+				}
+			}
+		
+			//console.log("Modified string is finally: " + modifiedString);
+			
+			// Check for names that don't change - generate message 
+			if (modifiedString.toLowerCase() == input) {
+				const errorMessage = document.createElement("div");
+				errorMessage.innerHTML = "Oh no! Your name is still the same";
+				errorMessage.classList.add("error");
+				document.getElementById("messageField").appendChild(errorMessage);
+				/*console.log("Names are the same: " + modifiedString.toLowerCase() + 
+				" and " + input);*/
+				return modifiedString;
+			} else {
+				/*console.log("Names are not the same: " + modifiedString.toLowerCase() + 
+				" and " + input);*/
+				return modifiedString;
+			}
+		
+		}
+						
+		</script>
+
+	<style>
+		body {font-family: sans-serif}
+		h1, h2, noscript, form, output {text-align: center}
+		
+		.label {
+		  display: inline-block;
+		}
+		
+		.button {
+		  display: inline-block;
+		  margin: auto;
+		  position: relative;
+		}
+		
+		.output {
+		  position: relative;
+		  font-size: large;
+		  margin: auto;
+		  margin: 20px;
+		}
+		
+		.name {
+		  margin: auto;
+		  padding: 10px;
+		  font-size: larger;
+		  color: #FFC200;
+		  font-weight: bold;
+		  background-color: #005583;
+		  position: relative;
+		}
+		
+		.error {
+		  color: red;
+		}
+				
+	</style>
+
+  </head>
+
+  <body>
+  <h1>&#x1F1F8;&#x1F1EA; Swedish Furniture Name Generator &#x1F1F8;&#x1F1EA;</h2>
+      <form action="" id="mainForm"> <!--TODO: Pushing Enter key activates form-->
+          <span id="label">Enter your name:</span>
+          <input type="text" name="inputField" id="inputField" value=""></text>
+          <input type="button" class="button" value="Generate name" 
+				onClick="generate()"/>
+      	  <div id="outputField" class="output"><!--Start blank--></div>
+      	  <div id="messageField" class="output"><!--Start blank--></div>
+      </form>
+      <!--TODO: Add explanation for how it works-->
+  </body>
+</html>
